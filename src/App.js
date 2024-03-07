@@ -1,6 +1,6 @@
 import {Component} from 'react'
 
-import {v4} from 'uuid'
+import {v4 as uuidv4} from 'uuid'
 
 import './App.css'
 
@@ -34,7 +34,7 @@ class App extends Component {
     const initial = website.slice(0, 1).toUpperCase()
     const classValue = colorList[Math.floor(Math.random() * 5)]
     const newValues = {
-      id: v4(),
+      id: uuidv4(),
       classAdd: classValue,
       initialValue: initial,
       userName: username,
@@ -42,7 +42,7 @@ class App extends Component {
       Password: password,
     }
     this.setState(prevState => ({
-      latestList: [prevState.latestList, newValues],
+      latestList: [...prevState.latestList, newValues],
       website: '',
       username: '',
       password: '',
@@ -80,10 +80,10 @@ class App extends Component {
       searchInput,
     } = this.state
     let {isTrue} = this.state
-    const newlist = latestList.filter(eachValue =>
+    const newList = latestList.filter(eachValue =>
       eachValue.websiteName.toLowerCase().includes(searchInput.toLowerCase()),
     )
-    if (newlist.length === 0) {
+    if (newList.length === 0) {
       isTrue = false
     } else {
       isTrue = true
@@ -117,6 +117,7 @@ class App extends Component {
                 onChange={this.listenWebsite}
               />
             </div>
+
             <div className="input-holder">
               <img
                 src="https://assets.ccbp.in/frontend/react-js/password-manager-username-img.png"
@@ -131,6 +132,7 @@ class App extends Component {
                 value={username}
               />
             </div>
+
             <div className="input-holder">
               <img
                 src="https://assets.ccbp.in/frontend/react-js/password-manager-password-img.png"
@@ -138,8 +140,8 @@ class App extends Component {
                 className="input-image"
               />
               <input
-                type="text"
-                className="input-text"
+                type="password"
+                className="input-element"
                 value={password}
                 onChange={this.listenPassword}
                 placeholder="Enter Password"
@@ -149,6 +151,7 @@ class App extends Component {
               Add
             </button>
           </form>
+          \
           <img
             src="https://assets.ccbp.in/frontend/react-js/password-manager-lg-img.png"
             alt="password manager"
@@ -159,7 +162,7 @@ class App extends Component {
           <div className="first-div">
             <div className="your-password">
               <h1 className="heading-name">Your Passwords</h1>
-              <p className="colored-text">{newlist.length}</p>
+              <p className="colored-text">{newList.length}</p>
             </div>
             <div className="search-holder">
               <img
@@ -200,7 +203,7 @@ class App extends Component {
           )}
           {!isTrue && (
             <ul className="result-container">
-              {newlist.map(eachValue => (
+              {newList.map(eachValue => (
                 <li className="item-list" key={eachValue.id} id={eachValue.id}>
                   <p className={`initial ${eachValue.classAdd}`}>
                     {eachValue.initialValue}
@@ -215,7 +218,7 @@ class App extends Component {
                         className="stars-image"
                       />
                     )}
-                    {isShow && <p className="website">{eachValue.password}</p>}
+                    {isShow && <p className="website">{eachValue.Password}</p>}
                   </div>
                   <button
                     type="button"
